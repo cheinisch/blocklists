@@ -1,0 +1,7 @@
+# Title: pi-hole - unwantend_content
+# Autor: Christian Heinisch
+# Date: 17. May 2026
+# Number of unique domains: 2
+
+xhamster.com
+youporn.com

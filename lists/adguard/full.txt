@@ -1,7 +1,7 @@
 # Title: AdGuard - Full
 # Autor: Christian Heinisch
 # Date: 17. May 2026
-# Number of unique domains: 82
+# Number of unique domains: 84
 
 ||aboutyou.de^
 ||adidas.de^
@@ -84,4 +84,6 @@
 ||wayfair.com^
 ||weltbild.de^
 ||wish.com^
+||xhamster.com^
+||youporn.com^
 ||zalando.de^
