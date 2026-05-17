@@ -1,0 +1,71 @@
+name: Build Blocklists
+
+on:
+  push:
+    paths:
+      - "src/**"
+      - ".github/workflows/build-blocklists.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build blocklists
+        run: |
+          mkdir -p lists/pihole lists/adguard
+
+          DATE="$(date '+%d. %B %Y')"
+
+          TMP="$(mktemp)"
+
+          find src -type f -name "*.txt" -print0 | while IFS= read -r -d '' file; do
+            sed -E '
+              s/\r$//;
+              s/#.*$//;
+              s/^[[:space:]]+//;
+              s/[[:space:]]+$//;
+              /^$/d;
+              s~^https?://~~;
+              s~/.*$~~;
+              s/^www\.//;
+              s/^[[:space:]]*0\.0\.0\.0[[:space:]]+//;
+              s/^[[:space:]]*127\.0\.0\.1[[:space:]]+//;
+            ' "$file" >> "$TMP"
+          done
+
+          sort -u "$TMP" > domains.txt
+          COUNT="$(wc -l < domains.txt)"
+
+          {
+            echo "# Title: pi-hole - Black-List"
+            echo "# Autor: Christian Heinisch"
+            echo "# Date: $DATE"
+            echo "# Number of unique domains: $COUNT"
+            echo ""
+            cat domains.txt
+          } > lists/pihole/blacklist.txt
+
+          {
+            echo "# Title: AdGuard - Black-List"
+            echo "# Autor: Christian Heinisch"
+            echo "# Date: $DATE"
+            echo "# Number of unique domains: $COUNT"
+            echo ""
+            sed 's/.*/||&^/' domains.txt
+          } > lists/adguard/blacklist.txt
+
+          rm "$TMP" domains.txt
+
+      - name: Commit generated lists
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update generated blocklists"
+          file_pattern: lists/pihole/blacklist.txt lists/adguard/blacklist.txt
