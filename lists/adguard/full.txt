@@ -1,7 +1,7 @@
 # Title: AdGuard - Full
 # Autor: Christian Heinisch
 # Date: 17. May 2026
-# Number of unique domains: 85
+# Number of unique domains: 86
 
 ||aboutyou.de^
 ||adidas.de^
@@ -69,6 +69,7 @@
 ||shein.com^
 ||shop-apotheke.com^
 ||skyscanner.de^
+||smythstoys.com^
 ||snipes.com^
 ||target.com^
 ||temu.com^
