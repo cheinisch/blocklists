@@ -4,6 +4,7 @@
 
 amazon.de
 amazon.com
+amazon.co.uk
 ebay.de
 ebay.com
 otto.de
