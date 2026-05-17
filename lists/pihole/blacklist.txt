@@ -1,12 +1,13 @@
 # Title: pi-hole - Black-List
 # Autor: Christian Heinisch
 # Date: 17. May 2026
-# Number of unique domains: 80
+# Number of unique domains: 81
 
 aboutyou.de
 adidas.de
 aliexpress.com
 alternate.de
+amazon.co.uk
 amazon.com
 amazon.de
 api-eu-a.bidmachine.io
