@@ -2,9 +2,6 @@ name: Build Blocklists
 
 on:
   push:
-    paths:
-      - "src/**"
-      - ".github/workflows/build-blocklists.yml"
   workflow_dispatch:
 
 permissions:
@@ -24,9 +21,14 @@ jobs:
 
           DATE="$(date '+%d. %B %Y')"
 
-          TMP="$(mktemp)"
+          PIHOLE_TMP="$(mktemp)"
+          ADGUARD_TMP="$(mktemp)"
 
           find src -type f -name "*.txt" -print0 | while IFS= read -r -d '' file; do
+            NAME="$(basename "$file" .txt)"
+
+            TMP="$(mktemp)"
+
             sed -E '
               s/\r$//;
               s/#.*$//;
@@ -38,34 +40,77 @@ jobs:
               s/^www\.//;
               s/^[[:space:]]*0\.0\.0\.0[[:space:]]+//;
               s/^[[:space:]]*127\.0\.0\.1[[:space:]]+//;
-            ' "$file" >> "$TMP"
+            ' "$file" | sort -u > "$TMP"
+
+            COUNT="$(wc -l < "$TMP")"
+
+            #
+            # Pi-hole Liste
+            #
+            {
+              echo "# Title: pi-hole - $NAME"
+              echo "# Autor: Christian Heinisch"
+              echo "# Date: $DATE"
+              echo "# Number of unique domains: $COUNT"
+              echo ""
+              cat "$TMP"
+            } > "lists/pihole/$NAME.txt"
+
+            #
+            # AdGuard Liste
+            #
+            {
+              echo "# Title: AdGuard - $NAME"
+              echo "# Autor: Christian Heinisch"
+              echo "# Date: $DATE"
+              echo "# Number of unique domains: $COUNT"
+              echo ""
+              sed 's/.*/||&^/' "$TMP"
+            } > "lists/adguard/$NAME.txt"
+
+            #
+            # Für full.txt sammeln
+            #
+            cat "$TMP" >> "$PIHOLE_TMP"
+            sed 's/.*/||&^/' "$TMP" >> "$ADGUARD_TMP"
+
+            rm "$TMP"
           done
 
-          sort -u "$TMP" > domains.txt
-          COUNT="$(wc -l < domains.txt)"
+          #
+          # FULL LISTS
+          #
+          sort -u "$PIHOLE_TMP" > pihole_full.txt
+          sort -u "$ADGUARD_TMP" > adguard_full.txt
+
+          PIHOLE_COUNT="$(wc -l < pihole_full.txt)"
+          ADGUARD_COUNT="$(wc -l < adguard_full.txt)"
 
           {
-            echo "# Title: pi-hole - Black-List"
+            echo "# Title: pi-hole - Full"
             echo "# Autor: Christian Heinisch"
             echo "# Date: $DATE"
-            echo "# Number of unique domains: $COUNT"
+            echo "# Number of unique domains: $PIHOLE_COUNT"
             echo ""
-            cat domains.txt
-          } > lists/pihole/blacklist.txt
+            cat pihole_full.txt
+          } > "lists/pihole/full.txt"
 
           {
-            echo "# Title: AdGuard - Black-List"
+            echo "# Title: AdGuard - Full"
             echo "# Autor: Christian Heinisch"
             echo "# Date: $DATE"
-            echo "# Number of unique domains: $COUNT"
+            echo "# Number of unique domains: $ADGUARD_COUNT"
             echo ""
-            sed 's/.*/||&^/' domains.txt
-          } > lists/adguard/blacklist.txt
+            cat adguard_full.txt
+          } > "lists/adguard/full.txt"
 
-          rm "$TMP" domains.txt
+          rm "$PIHOLE_TMP"
+          rm "$ADGUARD_TMP"
+          rm pihole_full.txt
+          rm adguard_full.txt
 
       - name: Commit generated lists
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update generated blocklists"
-          file_pattern: lists/pihole/blacklist.txt lists/adguard/blacklist.txt
+          file_pattern: lists/**/*.txt
