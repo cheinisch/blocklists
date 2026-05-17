@@ -1,7 +1,7 @@
 # Title: AdGuard - Full
 # Autor: Christian Heinisch
 # Date: 17. May 2026
-# Number of unique domains: 81
+# Number of unique domains: 82
 
 ||aboutyou.de^
 ||adidas.de^
@@ -55,6 +55,7 @@
 ||notebooksbilliger.de^
 ||obi.de^
 ||otto.de^
+||paddock-legends.com^
 ||pagead2.googlesyndication.com^
 ||paypal.com^
 ||prod-mediate-events.applovin.com^

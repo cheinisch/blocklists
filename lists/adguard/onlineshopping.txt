@@ -1,7 +1,7 @@
 # Title: AdGuard - onlineshopping
 # Autor: Christian Heinisch
 # Date: 17. May 2026
-# Number of unique domains: 67
+# Number of unique domains: 68
 
 ||aboutyou.de^
 ||adidas.de^
@@ -48,6 +48,7 @@
 ||notebooksbilliger.de^
 ||obi.de^
 ||otto.de^
+||paddock-legends.com^
 ||paypal.com^
 ||puma.com^
 ||rakuten.com^
