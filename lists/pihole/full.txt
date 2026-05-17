@@ -1,7 +1,7 @@
 # Title: pi-hole - Full
 # Autor: Christian Heinisch
 # Date: 17. May 2026
-# Number of unique domains: 84
+# Number of unique domains: 85
 
 aboutyou.de
 adidas.de
@@ -73,6 +73,7 @@ snipes.com
 target.com
 temu.com
 thalia.de
+thepiratebay.org
 toom.de
 tpc.googlesyndication.com
 track-eu-a.bidmachine.io

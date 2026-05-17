@@ -1,0 +1,6 @@
+# Title: AdGuard - pirate_pages
+# Autor: Christian Heinisch
+# Date: 17. May 2026
+# Number of unique domains: 1
+
+||thepiratebay.org^
