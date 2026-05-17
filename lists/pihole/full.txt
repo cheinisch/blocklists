@@ -1,7 +1,7 @@
 # Title: pi-hole - Full
 # Autor: Christian Heinisch
 # Date: 17. May 2026
-# Number of unique domains: 86
+# Number of unique domains: 88
 
 aboutyou.de
 adidas.de
@@ -33,6 +33,7 @@ etsy.de
 eventim.de
 expedia.de
 f.lazybumblebee.com
+facebook.com
 fansale.de
 gearbest.com
 geizhals.de
@@ -41,6 +42,7 @@ hornbach.de
 hugendubel.de
 idealo.de
 ikea.com
+instagram.com
 jako-o.com
 kaufland.de
 klarna.com

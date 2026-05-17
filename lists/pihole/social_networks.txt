@@ -1,0 +1,7 @@
+# Title: pi-hole - social_networks
+# Autor: Christian Heinisch
+# Date: 17. May 2026
+# Number of unique domains: 2
+
+facebook.com
+instagram.com
